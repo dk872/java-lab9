@@ -1,0 +1,33 @@
+name: Unit tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 22
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '22'
+
+      - name: Build and test task1
+        run: |
+          cd task1
+          mvn -B package --file pom.xml
+          mvn test
+
+      - name: Build and test task2
+        run: |
+          cd task2
+          mvn -B package --file pom.xml
+          mvn test
